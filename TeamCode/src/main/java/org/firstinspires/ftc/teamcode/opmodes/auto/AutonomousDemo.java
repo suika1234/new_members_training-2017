@@ -4,14 +4,20 @@ package org.firstinspires.ftc.teamcode.opmodes.auto;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+/* The skeleton of an autonomous program
+ *
+ */
 @Autonomous(name="Test: AutonomousDemo", group="Test")
 public class AutonomousDemo extends LinearOpMode {
 
     /* Declare OpMode members. */
+    // Example:
+    // Drivetrain drivetrain = new Drivetrain();
 
     @Override
     public void runOpMode() throws InterruptedException {
-        //Initialize the drive system variables.
+        //Define and initialize the drive system variables.
+        //drivetrain = new Drivetrain(hardwareMap.dcMotor.get("left"),hardwareMap.dcMotor.get("right"));
 
         // Wait for the game to start (driver presses PLAY), THIS HAS TO BE HERE!
         waitForStart();

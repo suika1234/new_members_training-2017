@@ -3,6 +3,9 @@ package org.firstinspires.ftc.teamcode.opmodes.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+/* Different things you can utilize in a teleop program
+ *
+ */
 @TeleOp(name="Test: TeleopDemo", group="Test")
 
 public class TeleopDemo extends OpMode {
@@ -44,8 +47,6 @@ public class TeleopDemo extends OpMode {
     public void loop() {
 
         //Example:
-        //drivetrain.drivingmethod(1 * gamepad1.left_stick_y, gamepad1.right_stick_x);
-
         /* if(gamepad1.x) {
             drivetrain.stop();
         } */

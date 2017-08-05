@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode.opmodes.subsystems;
 
-
-import com.qualcomm.robotcore.hardware.DcMotor;
-
+/* Example of a Drivetrain class
+ * Keep in mind that this is only one way of organizing your code
+ * I just personally prefer to keep the some of measurements/methods in subsystems,
+ * so that it is not as messy later on when we add more things in the code
+ */
 public class Drivetrain {
 
     /* Declare measurements of the robot */
@@ -14,7 +16,6 @@ public class Drivetrain {
     //Example:
     //private DcMotor leftMotor;
     //private DcMotor rightMotor;
-
 
 
     // This is called a constructor. The things in the parenthesis are called the parameters.
@@ -31,10 +32,6 @@ public class Drivetrain {
 
         //leftDriveMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //rightDriveMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        //You can also put methods here
-        resetEncoder();
-        stop();
     }
 
     //You can create several methods, or the actions, for the robots to do here.
@@ -42,18 +39,17 @@ public class Drivetrain {
     //for each autonomous or teleop that you do, you can replace it by simply writing a method.
 
     //this is the driving method for the robot
-    //Hint, you would want to pass parameters in the drivingmethod()
-    public void drivingmethod() {
+    //Hint, you would want to pass parameters in arcadeDrive()
+    public void arcadeDrive() {
 
     }
 
     //if you're using encoders, you can use this method to reset it.
 
-    public void resetEncoder() {
+    public void resetEncoders() {
         //Example:
         //leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
     }
 
     //this can use to stop the robot once the robot has reached its objectives
