@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opmodes.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 /* Different things you can utilize in a teleop program
  *
@@ -12,7 +13,7 @@ public class TeleopDemo extends OpMode {
 
     /* Declare OpMode members. */
     //Examples:
-    // private DcMotor leftMotor;
+    private DcMotor leftMotor;
     // private DcMotor rightMotor;
     // private Servo arm;
 
@@ -38,6 +39,7 @@ public class TeleopDemo extends OpMode {
         //Example:
         //drivetrain.stop();
 
+        //arcadeDrive();
     }
 
     /*
@@ -50,6 +52,7 @@ public class TeleopDemo extends OpMode {
         /* if(gamepad1.x) {
             drivetrain.stop();
         } */
+
 
     }
 

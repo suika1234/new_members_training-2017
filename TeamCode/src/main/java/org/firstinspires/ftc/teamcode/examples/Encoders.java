@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 /* Tetrix encoders have 1440 ticks per revolution
@@ -16,13 +17,18 @@ import com.qualcomm.robotcore.util.Range;
 
 @Autonomous(name="Test: Encoders", group="Test")
 public class Encoders extends LinearOpMode {
+
+    /* Initialize variables */
     private DcMotor leftMotor;
     private DcMotor rightMotor;
+    private ElapsedTime     runtime = new ElapsedTime();
 
-    private final int TICKS_PER_ROTATION = 1120;
-    private final int WHEEL_DIAMETER = 4;   //Inches
-    private final int BOT_DIAMETER = 15;    //Inches
-    private final double kP = 10.00436;
+    /* Measurements */
+    static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
+    static final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // This is < 1.0 if geared UP
+    static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
+    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+            (WHEEL_DIAMETER_INCHES * 3.1415);
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -33,69 +39,59 @@ public class Encoders extends LinearOpMode {
 
         waitForStart();
 
-        driveToPosition(45);
-
-        turnToPosition(20);
-
         idle();
     }
 
-    public void driveToPosition(double position) {
-        double rotations = position / (WHEEL_DIAMETER * Math.PI);
-        double[] power = {1, 1};
-        double[] error = {rotations * TICKS_PER_ROTATION, rotations * TICKS_PER_ROTATION};
+    /*
+         *  Method to perform a relative move, based on encoder counts.
+         *  Encoders are not reset as the move is based on the current position.
+         *  Move will stop if any of three conditions occur:
+         *  1) Move gets to the desired position
+         *  2) Move runs out of time
+         *  3) Driver stops the opmode running.
+         */
+    public void encoderDrive(double speed,
+                             double leftInches, double rightInches,
+                             double timeoutS) throws InterruptedException {
+        int newLeftTarget;
+        int newRightTarget;
 
-        resetEncoders();
+        // Ensure that the opmode is still active
+        if (opModeIsActive()) {
 
-        while(Math.abs(leftMotor.getCurrentPosition()) < Math.abs(rotations * TICKS_PER_ROTATION) && Math.abs(rightMotor.getCurrentPosition()) < Math.abs(rotations * TICKS_PER_ROTATION)) {
-            error[0] = rotations * TICKS_PER_ROTATION - leftMotor.getCurrentPosition();
-            error[1] = rotations * TICKS_PER_ROTATION - rightMotor.getCurrentPosition();
+            // Determine new target position, and pass to motor controller
+            newLeftTarget = leftMotor.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
+            newRightTarget = rightMotor.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
+            leftMotor.setTargetPosition(newLeftTarget);
+            rightMotor.setTargetPosition(newRightTarget);
 
-            power[0] = Range.clip(error[0] * kP, -1, 1);
-            power[1] = Range.clip(error[1] * kP, -1, 1);
+            // Turn On RUN_TO_POSITION
+            leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            leftMotor.setPower(power[0]);
-            rightMotor.setPower(power[1]);
+            // reset the timeout time and start motion.
+            runtime.reset();
+            leftMotor.setPower(Math.abs(speed));
+            rightMotor.setPower(Math.abs(speed));
+
+            // keep looping while we are still active, and there is time left, and both motors are running.
+            while (opModeIsActive() &&
+                    (runtime.seconds() < timeoutS) &&
+                    (leftMotor.isBusy() && rightMotor.isBusy())) {
+
+                // Allow time for other processes to run.
+                idle();
+            }
+
+            // Stop all motion;
+            leftMotor.setPower(0);
+            rightMotor.setPower(0);
+
+            // Turn off RUN_TO_POSITION
+            leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            //  sleep(250);   // optional pause after each move
         }
-
-        leftMotor.setPower(0);
-        rightMotor.setPower(0);
-    }
-
-    public void turnToPosition(double angle) {
-        resetEncoders();
-
-        double rotations = angle / 180 * 3.9;
-        double power = 1;
-        double error = rotations * TICKS_PER_ROTATION;
-
-        resetEncoders();
-
-        while(Math.abs(leftMotor.getCurrentPosition()) < Math.abs(rotations * TICKS_PER_ROTATION)) {
-            error = rotations * TICKS_PER_ROTATION - leftMotor.getCurrentPosition();
-
-            power = Range.clip(error * kP, -1, 1);
-
-            leftMotor.setPower(power);
-            rightMotor.setPower(0.0);
-        }
-
-        leftMotor.setPower(0);
-        rightMotor.setPower(0);
-    }
-
-    public int[] getPosition() {
-        return new int[] {
-                leftMotor.getCurrentPosition(),
-                rightMotor.getCurrentPosition()
-        };
-    }
-
-    public void resetEncoders() {
-        leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
     }
 }

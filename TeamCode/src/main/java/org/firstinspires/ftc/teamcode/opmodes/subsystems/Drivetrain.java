@@ -18,6 +18,7 @@ public class Drivetrain {
     //private DcMotor rightMotor;
 
 
+
     // This is called a constructor. The things in the parenthesis are called the parameters.
     // Depending on what your robot can do, you can add in the parameters to suit the robot as needed.
     // For example, we have 2 motors to operate the four wheels on the robot.
