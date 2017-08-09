@@ -5,6 +5,7 @@ package org.firstinspires.ftc.teamcode.examples;
  */
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -15,7 +16,8 @@ import com.qualcomm.robotcore.util.Range;
  * Andymark encoders have 1120 ticks per revolution
  */
 
-@Autonomous(name="Test: Encoders", group="Test")
+@Autonomous(name="Test: Encoders")
+@Disabled
 public class Encoders extends LinearOpMode {
 
     /* Initialize variables */

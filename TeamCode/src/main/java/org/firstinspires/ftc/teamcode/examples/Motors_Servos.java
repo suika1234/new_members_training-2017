@@ -4,13 +4,15 @@ package org.firstinspires.ftc.teamcode.examples;
  *
  */
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name="Test: Motors_Servos", group="Test")
+@TeleOp(name="Test: Motors_Servos")
+@Disabled
 public class Motors_Servos extends OpMode {
 
     private DcMotor leftMotor;
@@ -39,3 +41,6 @@ public class Motors_Servos extends OpMode {
 
     }
 }
+
+
+

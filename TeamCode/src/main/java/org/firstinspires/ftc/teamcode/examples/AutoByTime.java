@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.examples;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -7,7 +9,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * Example of an autonomous mode, driving by time
  */
-
+@Autonomous(name="Ex: AutoByTime")
+@Disabled
 public class AutoByTime extends LinearOpMode {
 
     DcMotor leftMotor;

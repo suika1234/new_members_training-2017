@@ -7,9 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 /* Different things you can utilize in a teleop program
  *
  */
-@TeleOp(name="Test: TeleopDemo", group="Test")
+@TeleOp(name="Test: Pushbot_Teleop")
 
-public class TeleopDemo extends OpMode {
+public class Pushbot_Teleop extends OpMode {
 
     /* Declare OpMode members. */
     //Examples:
@@ -27,8 +27,6 @@ public class TeleopDemo extends OpMode {
          * step (using the FTC Robot Controller app on the phone).
          */
 
-        //Example:
-        //drivetrain = new Drivetrain(hardwareMap.dcMotor.get("left"), hardwareMap.dcMotor.get("right"));
     }
 
     /*
@@ -36,10 +34,7 @@ public class TeleopDemo extends OpMode {
      */
     @Override
     public void start() {
-        //Example:
-        //drivetrain.stop();
 
-        //arcadeDrive();
     }
 
     /*
@@ -50,7 +45,7 @@ public class TeleopDemo extends OpMode {
 
         //Example:
         /* if(gamepad1.x) {
-            drivetrain.stop();
+            arcadeDrive();
         } */
 
 
