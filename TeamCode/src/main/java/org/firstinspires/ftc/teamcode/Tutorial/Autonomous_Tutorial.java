@@ -36,6 +36,7 @@ public class Autonomous_Tutorial extends LinearOpMode {
         // set the power to 0.5, turn 40 inches to the right, with a 2 second timeout
 
         encoderDrive(0.5, 48, 48, 3);
+        encoderDrive(0.5, -25, -25, 3);
 
         /*
         arcadeDrive(0.5,0);
